@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "minecraft:slabs"
+    },
+    "x": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "###",
+    "x#x",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "usefulbookshelf:useful_bookshelf"
+  }
+}

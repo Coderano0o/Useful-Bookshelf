@@ -1,0 +1,24 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/cube_column",
+	"textures": {
+		"6": "usefulbookshelf:block/book05_f2_n",
+		"particle": "usefulbookshelf:block/book01_f2_n"
+	},
+	"elements": [
+		{
+			"name": "book05_f2_n",
+			"from": [7, 9, 2],
+			"to": [8, 13, 7],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 5]},
+			"faces": {
+				"north": {"uv": [6, 0, 7, 4], "texture": "#6"},
+				"east": {"uv": [0, 0, 5, 4], "texture": "#6"},
+				"south": {"uv": [6, 4, 7, 8], "texture": "#6"},
+				"west": {"uv": [0, 4, 5, 8], "texture": "#6"},
+				"up": {"uv": [6, 5, 5, 0], "texture": "#6"},
+				"down": {"uv": [6, 5, 5, 10], "texture": "#6"}
+			}
+		}
+	]
+}

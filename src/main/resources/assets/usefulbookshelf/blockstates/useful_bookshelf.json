@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "usefulbookshelf:block/bookshelf_shelf_part"
+    },
+    "facing=east": {
+      "model": "usefulbookshelf:block/bookshelf_shelf_part",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "usefulbookshelf:block/bookshelf_shelf_part",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "usefulbookshelf:block/bookshelf_shelf_part",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "site.coderan.usefulbookshelf.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "usefulbookshelf.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
