@@ -31,7 +31,8 @@ public class UsefulBookshelfMenu extends AbstractContainerMenu {
      */
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        ItemStack clickedStack = this.slots.get(index).getItem();
+        Slot clickedSlot = this.slots.get(index);
+        ItemStack clickedStack = clickedSlot.getItem();
         if (clickedStack.getItem() == Items.BOOK || clickedStack.getItem() == Items.WRITTEN_BOOK || clickedStack.getItem() == Items.ENCHANTED_BOOK || clickedStack.getItem() == Items.WRITABLE_BOOK || clickedStack.getItem() == Items.KNOWLEDGE_BOOK){
             // 当下标小于36时，说明点击的物品是玩家背包物品，需要快速放置到书架仓库
             // 当下标大于等于36时，说明点击的物品是书架仓库物品，需要快速放置到玩家背包
@@ -41,21 +42,21 @@ public class UsefulBookshelfMenu extends AbstractContainerMenu {
                 // 当x大于0时，此方法将0-（x-1）下标的槽位中的itemStack快速移动到x-(y-1)下标的槽位中
                 // 当x等于0时，此方法将任何点击的槽位中的itemStack快速移动到0-（y-1）下标的槽位中
                 // sort为false时表示要正序快速移动，true时表示要倒序快速移动
-                if (this.moveItemStackTo(clickedStack, 36, 54, false)) {
-                    return clickedStack;
-                } else {
+                if (!this.moveItemStackTo(clickedStack, 36, 54, false)) {
                     return ItemStack.EMPTY;
                 }
             } else {
-                if (this.moveItemStackTo(clickedStack, 0, 36, false)) {
-                    return clickedStack;
-                } else {
+                if (!this.moveItemStackTo(clickedStack, 0, 36, false)) {
                     return ItemStack.EMPTY;
                 }
             }
-        } else {
-            return ItemStack.EMPTY;
         }
+        if (clickedStack.isEmpty()) {
+            clickedSlot.set(ItemStack.EMPTY);
+        } else {
+            clickedSlot.setChanged();
+        }
+        return clickedStack.copy();
     }
 
     @Override
