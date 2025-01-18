@@ -5,6 +5,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
@@ -22,31 +23,39 @@ public class UsefulBookshelfMenu extends AbstractContainerMenu {
         this.layoutBookshelfInventorySlots(bookshelfInventory);
     }
 
+    /***
+     * 定义shift + RMB 一个物品时的快速移动行为
+     * @param player
+     * @param index 玩家点击一个物品时，该物品的槽位下标
+     * @return 移动失败返回ItemStack.EMPTY
+     */
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(index);
-
-        if (slot != null && slot.hasItem()) {
-            ItemStack itemstack1 = slot.getItem();
-            itemstack = itemstack1.copy();
-
-            if (index < 36) {  // 假设玩家背包有 36 个槽位
-                if (!this.moveItemStackTo(itemstack1, 36, 45, false)) {
+        ItemStack clickedStack = this.slots.get(index).getItem();
+        if (clickedStack.getItem() == Items.BOOK || clickedStack.getItem() == Items.WRITTEN_BOOK || clickedStack.getItem() == Items.ENCHANTED_BOOK || clickedStack.getItem() == Items.WRITABLE_BOOK || clickedStack.getItem() == Items.KNOWLEDGE_BOOK){
+            // 当下标小于36时，说明点击的物品是玩家背包物品，需要快速放置到书架仓库
+            // 当下标大于等于36时，说明点击的物品是书架仓库物品，需要快速放置到玩家背包
+            // 玩家和书架仓库的槽位下标不是固定的，需要看addSlot操作
+            if (index < 36) {
+                // quickMoveStack的关键在moveItemStackTo(ItemStack clickedStack, int x, int y, bool sort)
+                // 当x大于0时，此方法将0-（x-1）下标的槽位中的itemStack快速移动到x-(y-1)下标的槽位中
+                // 当x等于0时，此方法将任何点击的槽位中的itemStack快速移动到0-（y-1）下标的槽位中
+                // sort为false时表示要正序快速移动，true时表示要倒序快速移动
+                if (this.moveItemStackTo(clickedStack, 36, 54, false)) {
+                    return clickedStack;
+                } else {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(itemstack1, 0, 36, false)) {
-                return ItemStack.EMPTY;
-            }
-
-            if (itemstack1.isEmpty()) {
-                slot.set(ItemStack.EMPTY);
             } else {
-                slot.setChanged();
+                if (this.moveItemStackTo(clickedStack, 0, 36, false)) {
+                    return clickedStack;
+                } else {
+                    return ItemStack.EMPTY;
+                }
             }
+        } else {
+            return ItemStack.EMPTY;
         }
-
-        return itemstack;
     }
 
     @Override
